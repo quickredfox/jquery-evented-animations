@@ -1,17 +1,21 @@
 (function() {
-    var node,el,started,ended,stepped,animated,duration=100;
+    var node,el,started,ended,stepped,animated,startCTX,endCTX,stepCTX,duration=100;
     function resetDOM() {
         el = node.clone().appendTo(node.parent().empty());
         el.clearQueue('fx').stop().data('events', {});
         started = ended = stepped = animated - false;
+        startCTX,endCTX,stepCTX = null;
         onStart = function() {
             started = true;
+            startCTX = this;            
         };
         onEnd = function() {
             ended = true;
+            endCTX = this;            
         };
         onStep = function() {
             stepped = true;
+            stepCTX = this;
         };
         el.unbind('start.animate', onStart);
         el.unbind('end.animate', onEnd);
@@ -31,6 +35,7 @@
         node = $('#test:first');
         resetDOM();
         module("$.fn.animate() with {evented:true} ");
+        
         asyncTest('should animate and stop animating',function() {
             ok(el.is(':animated'), 'element should be animated');
             stop();
@@ -43,6 +48,7 @@
                 start();
             },duration*2)
         });
+        
         asyncTest("should trigger start/step/end events",
         function()
         {
@@ -59,5 +65,18 @@
             duration*2)
 
         });
+        
+        asyncTest("should keep \"this\" context in events callbacks",function() {
+            stop();
+            // expect 3 assertions left            
+            expect(3);            
+            setTimeout(function() {
+                equals(startCTX,el.get(0),"context is kept in start.animate")
+                equals(stepCTX,el.get(0),"context is kept in step.animate")                
+                equals(endCTX, el.get(0),"context is kept in end.animate")                                
+                start();
+            },duration*2)
+        });
+        
     });
 })()
