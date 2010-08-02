@@ -11,6 +11,12 @@ can be bound and unbound using the appropriate bind()/unbind() jQuery methods.
   * step.animate: When the animation steps a "frame"
   * end.animate: When the animation is done
 
+To run tests, open /tests/run.html
+
+To see example usage open /lib/usage.html
+
+To use, include jquery.evented-animations.js into your html page.
+
 ## License 
 
 (The MIT License)
