@@ -22,13 +22,14 @@
 		top:0;left:0;width:200px;
 		color:#fff;
 		padding:10px;text-align:center;
+		cursor:pointer;
 	}
 	</style>
 	<script type="text/javascript" charset="utf-8">
 	// When the document is ready
 	$(function() {
 		var texts = [
-			'An element to be animated /w listeners bound.',
+			'An element to be animated /w listeners bound. Click me to start!',
 			'An element modified by the start.animate listener',		
 			'An element modified by the step.animate listener',			
 			'An element modified by the end.animate listener'
@@ -47,10 +48,9 @@
 			console.debug($(this))
 			$(this).html(texts.shift()).css({background:'red'});
 		});
-		setTimeout(function() {
-			$('#demo').animate({left:'500px'},{evented:true,duration:1000});	
-		},1000)
-
+		$('#demo').bind('click',function() {
+						$(this).delay(100).animate({left:'500px'},{evented:true,duration:1000});	
+		})
 	})
 	</script>
 </head>
