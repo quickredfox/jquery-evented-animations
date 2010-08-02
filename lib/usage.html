@@ -16,10 +16,12 @@
 		</script>
 	<![endif]-->
 	<style type="text/css" media="screen">
-	body{width:1000px;height:500px;}
+	body{width:1000px;height:500px;font-family:sans-serif}
 	#demo{
 		position:relative;
-		top:0;left:0;
+		top:0;left:0;width:200px;
+		color:#fff;
+		padding:10px;text-align:center;
 	}
 	</style>
 	<script type="text/javascript" charset="utf-8">
@@ -27,23 +29,28 @@
 	$(function() {
 		var texts = [
 			'An element to be animated /w listeners bound.',
-			'An element modified by the <b style="color:green">start</b>.animate listener',		
-			'An element modified by the <b style="color:orange">step</b>.animate listener',			
-			'An element modified by the <b style="color:red">end</b>.animate listener'
+			'An element modified by the start.animate listener',		
+			'An element modified by the step.animate listener',			
+			'An element modified by the end.animate listener'
 		];
-		var demo = $('#demo').html(texts.shift());
+		var demo = $('#demo').html(texts.shift()).css({background:'blue'});
 		demo.bind('start.animate',function(event) {
-			$(this).html(texts.shift());
+			$(this).html(texts.shift()).css({background:'green'})
 		});
-		// POC, dont need to bind to every single "step" call hence: demo.one()
-		demo.one('step.animate',function(event) {
-			$(this).html(texts.shift());
+		// POC, dont need to see every single "step" ;
+		var steps = 0;
+		demo.bind('step.animate',function(event) {
+			steps ++
+			if(steps == 8) $(this).html(texts.shift()).css({background:'orange'})
 		});
 		demo.bind('end.animate',function(event) {
 			console.debug($(this))
-			$(this).html(texts.shift());
+			$(this).html(texts.shift()).css({background:'red'});
 		});
-		$('#demo').animate({left:'500px'},{evented:true,duration:1000});
+		setTimeout(function() {
+			$('#demo').animate({left:'500px'},{evented:true,duration:1000});	
+		},1000)
+
 	})
 	</script>
 </head>
