@@ -45,7 +45,6 @@
 			if(steps == 8) $(this).html(texts.shift()).css({background:'orange'})
 		});
 		demo.bind('end.animate',function(event) {
-			console.debug($(this))
 			$(this).html(texts.shift()).css({background:'red'});
 		});
 		$('#demo').bind('click',function() {
