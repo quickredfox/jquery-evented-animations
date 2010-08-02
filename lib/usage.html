@@ -41,15 +41,10 @@
 		// POC, dont need to see every single "step" ;
 		var steps = 0;
 		demo.bind('step.animate',function(event) {
-			steps ++
-			if(steps == 8) $(this).html(texts.shift()).css({background:'orange'})
+			if(++steps == 8) $(this).html(texts.shift()).css({background:'orange'})
 		});
-		demo.bind('end.animate',function(event) {
-			$(this).html(texts.shift()).css({background:'red'});
-		});
-		$('#demo').bind('click',function() {
-						$(this).delay(100).animate({left:'500px'},{evented:true,duration:1000});	
-		})
+		demo.bind('end.animate',function() { $(this).html(texts.shift()).css({background:'red'}); });
+		$('#demo').bind('click',function() { $(this).delay(100).animate({left:'500px'},{evented:true,duration:1000}); })
 	})
 	</script>
 </head>
